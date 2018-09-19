@@ -1,0 +1,15 @@
+---
+- hosts: leaf01
+  connection: httpapi
+  gather_facts: false
+  tasks:
+
+    - name: type a simple arista command
+      eos_command:
+        commands:
+          - show version | json
+      register: command_output
+
+    - name: print command output to terminal window
+      debug:
+        var: command_output.stdout[0]["version"]
